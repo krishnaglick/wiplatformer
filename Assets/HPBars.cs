@@ -47,7 +47,7 @@ public class HPBars : MonoBehaviour {
 		//Gets the mob's y position relative to the screen with an offset that won't screw up on multiple screen sizes
 		float yPosition = Camera.main.pixelHeight - screenPos.y - (Camera.main.pixelHeight / 8);
 		//Scales the bar's height based on the size of the enemy
-		float barHeight = target.renderer.bounds.size.y * 6;
+		float barHeight = target.GetComponent<Renderer>().bounds.size.y * 6;
 		//Draws the hp and background bars
 		GUI.DrawTexture(new Rect(xPosition, yPosition, MaxHP, barHeight), Background);
 		//If the current hp is above the max hp, don't fuck up the hp bar amg

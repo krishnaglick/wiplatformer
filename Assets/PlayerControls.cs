@@ -104,14 +104,14 @@ public class PlayerControls : MonoBehaviour
 		//Move player left
 		if(Input.GetKey(Controls["Left"]))
 		{
-			player.collider2D.rigidbody2D.AddForce(new Vector2(-10, 0), ForceMode2D.Force);
+			player.GetComponent<Collider2D>().GetComponent<Rigidbody2D>().AddForce(new Vector2(-10, 0), ForceMode2D.Force);
 			Facing = -10;
 		}
 
 		//Move player right
 		if(Input.GetKey(Controls["Right"]))
 		{
-			player.collider2D.rigidbody2D.AddForce(new Vector2(10, 0), ForceMode2D.Force);
+			player.GetComponent<Collider2D>().GetComponent<Rigidbody2D>().AddForce(new Vector2(10, 0), ForceMode2D.Force);
 			Facing = 10;
 		}
 
@@ -162,9 +162,9 @@ public class PlayerControls : MonoBehaviour
 		{
 			//If the enemy is to the right of the player knock left, otherwise knock right
 			if(col.gameObject.transform.position.x > player.transform.position.x)
-				player.collider2D.rigidbody2D.AddForce(new Vector2(-knockbackX, knockbackY), ForceMode2D.Impulse);
+				player.GetComponent<Collider2D>().GetComponent<Rigidbody2D>().AddForce(new Vector2(-knockbackX, knockbackY), ForceMode2D.Impulse);
 			else
-				player.collider2D.rigidbody2D.AddForce(new Vector2(knockbackX, knockbackY), ForceMode2D.Impulse);
+				player.GetComponent<Collider2D>().GetComponent<Rigidbody2D>().AddForce(new Vector2(knockbackX, knockbackY), ForceMode2D.Impulse);
 			//Will need to pull damage on an enemy by enemy basis
 			//Store damage taken in enemy's AI component
 			curHP -= 5;
@@ -176,19 +176,19 @@ public class PlayerControls : MonoBehaviour
 		//Increment jump counter
 		JumpCount++;
 		//Set y-velocity to 0 so double jumps don't get weird
-		player.collider2D.rigidbody2D.velocity = new Vector2(player.collider2D.rigidbody2D.velocity.x, 0);
+		player.GetComponent<Collider2D>().GetComponent<Rigidbody2D>().velocity = new Vector2(player.GetComponent<Collider2D>().GetComponent<Rigidbody2D>().velocity.x, 0);
 		//Do the jump!
-		player.collider2D.rigidbody2D.AddForce(new Vector2(0, JumpHeight), ForceMode2D.Impulse);
+		player.GetComponent<Collider2D>().GetComponent<Rigidbody2D>().AddForce(new Vector2(0, JumpHeight), ForceMode2D.Impulse);
 	}
 
 	void LimitMoveSpeed()
 	{
 		//If the players ground speed is too high in left (negative) or right (positive) directions, limit it!
-		if(player.collider2D.rigidbody2D.velocity.x > GroundSpeed)
-			player.collider2D.rigidbody2D.velocity = new Vector2(GroundSpeed, player.collider2D.rigidbody2D.velocity.y);
+		if(player.GetComponent<Collider2D>().GetComponent<Rigidbody2D>().velocity.x > GroundSpeed)
+			player.GetComponent<Collider2D>().GetComponent<Rigidbody2D>().velocity = new Vector2(GroundSpeed, player.GetComponent<Collider2D>().GetComponent<Rigidbody2D>().velocity.y);
 		
-		if(player.collider2D.rigidbody2D.velocity.x < (-GroundSpeed))
-			player.collider2D.rigidbody2D.velocity = new Vector2((-GroundSpeed), player.collider2D.rigidbody2D.velocity.y);
+		if(player.GetComponent<Collider2D>().GetComponent<Rigidbody2D>().velocity.x < (-GroundSpeed))
+			player.GetComponent<Collider2D>().GetComponent<Rigidbody2D>().velocity = new Vector2((-GroundSpeed), player.GetComponent<Collider2D>().GetComponent<Rigidbody2D>().velocity.y);
 	}
 
 	void regen()
@@ -250,7 +250,7 @@ public class PlayerControls : MonoBehaviour
 				//Create a new projectile
 				GameObject shot = (GameObject)Instantiate(Resources.Load("Shot", typeof(GameObject)), player.transform.position, Quaternion.identity);
 				//Shoot it in the correct direction using impulse which is instant
-				shot.rigidbody2D.AddForce(new Vector2(Facing, 0), ForceMode2D.Impulse);
+				shot.GetComponent<Rigidbody2D>().AddForce(new Vector2(Facing, 0), ForceMode2D.Impulse);
 				//Set a destroy timer, don't want it running off into space forever and taking up memory
 				Destroy(shot, projectileDeathTime);
 				//Set the damage

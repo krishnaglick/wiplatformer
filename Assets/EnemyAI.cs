@@ -50,9 +50,9 @@ public class EnemyAI : MonoBehaviour
 			return;
 		//My "AI", basically spaz back and forth based on randomness.
 		if(new System.Random().Next(2) == 0)
-			self.collider2D.rigidbody2D.AddForce(new Vector2(-20, 0), ForceMode2D.Force);
+			self.GetComponent<Collider2D>().GetComponent<Rigidbody2D>().AddForce(new Vector2(-20, 0), ForceMode2D.Force);
 		else
-			self.collider2D.rigidbody2D.AddForce(new Vector2(20, 0), ForceMode2D.Force);
+			self.GetComponent<Collider2D>().GetComponent<Rigidbody2D>().AddForce(new Vector2(20, 0), ForceMode2D.Force);
 	}
 
 	void OnTriggerEnter2D(Collider2D col)
