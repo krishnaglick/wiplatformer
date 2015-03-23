@@ -37,7 +37,7 @@ public class PlayerControls : MonoBehaviour
 	//Players limit on ranged attacks, max energy
 	private float curEnergy;
 	//Energy regen rate
-	private float energyRegenRate = 10;
+	private float energyRegenRate = 50;
 
 	//Bottom of the swing
 	private float swingHeightMin = 0;

@@ -4,16 +4,11 @@ using System.Collections;
 public class EnemyAI : MonoBehaviour
 {
 	public GameObject self;
-
-	public float maxHP = 100;
-
-	public bool runAI = true;
-
-	private float _curHP = 100;
-	//So this bullshit is a properly
-	//It's really cool
-	//I get to return _curHP which is private when you call it
-	//But if I change the fucker it'll alter the value PLUS update the hp bar
+    public HPBar creatureHPBar;
+    public bool runAI = true;
+	
+    public float maxHP = 100;
+    private float _curHP = 100;
 	public float curHP
 	{
 		get
@@ -23,15 +18,13 @@ public class EnemyAI : MonoBehaviour
 		set
 		{
 			_curHP = value;
-			//Dank shit right here
-			self.GetComponent<HPBars>().updateHP(curHP, maxHP, getHPColor());
+            creatureHPBar.updateCreatureHP(curHP / maxHP, getHPColor());
 		}
 	}
 	
 	void Start()
 	{
-		//Add an hp bar to this, 100 hp
-		self.AddComponent<HPBars>().Init(self, curHP, maxHP, Color.green);
+        creatureHPBar = new HPBar(self, curHP/maxHP, Color.green);
 
 		//Enemy HP Regen
 		InvokeRepeating("regen", 0, 1f);
@@ -40,11 +33,10 @@ public class EnemyAI : MonoBehaviour
 	void Update()
 	{
 		//Kill yo self
-		if(curHP <= 0)
-			Destroy(self);
-		//Don't allow overheals, might allow for hp bar wrapping but NOT YET CAUSE MATH?
-		if(_curHP > maxHP)
-			_curHP = maxHP;
+        if (curHP <= 0) {
+            creatureHPBar.Destroy();
+            Destroy(self);
+        }
 		//Don't do move things if computer has the dumb
 		if(!runAI)
 			return;
@@ -64,7 +56,12 @@ public class EnemyAI : MonoBehaviour
 	void regen()
 	{
 		//Heal some!
-		curHP += 2.5f;
+        if (curHP < maxHP) {
+            curHP += 2.5f;
+        }
+        else if(curHP >= maxHP) {
+            curHP = maxHP;
+        }
 	}
 
 	Color getHPColor()
