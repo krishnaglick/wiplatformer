@@ -10,13 +10,10 @@ namespace Game.Utilities {
         void draw();
     }
 
-    public static class DrawHandler {
+    public class DrawHandler : MonoBehaviour {
         public static List<object> itemsToDraw = new List<object>();
 
-        /// <summary>
-        /// Gets called every ui redraw. Static classes are bloody weird with Unity.
-        /// </summary>
-        public static void OnGUI() {
+        void OnGUI() {
             foreach (IDrawable drawable in itemsToDraw) {
                 drawable.draw();
             }
